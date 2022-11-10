@@ -2,6 +2,8 @@ package com.example.registrationproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Patterns
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -16,7 +18,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var Check: CheckBox
     private lateinit var Button: Button
 
+    fun String.isValidEmail() =
+        !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -26,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         Password = findViewById(R.id.password)
         Check = findViewById(R.id.checkbox)
         Button = findViewById(R.id.button)
+
+
+
         Button.setOnClickListener {
             
             if (Name.text.toString().length < 3 || Name.text.toString() == "" ) {
@@ -33,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 
             }else if(LastName.text.toString().length < 5  || LastName.text.toString() == "") {
                 Toast.makeText(this, "შეიყვანეთ გვარი სწორად", Toast.LENGTH_SHORT).show()
-            }else if("@" !in Email.text.toString()){
+            }else if (Email.text.toString().isValidEmail()){
                 Toast.makeText(this, "შეიყვანეთ იმეილი სწორად", Toast.LENGTH_SHORT).show()
             }else if (Password.text.toString().length < 8 || Password.text.toString() == "") {
                 Toast.makeText(this, "sheiyvane paroli chemi dzma", Toast.LENGTH_SHORT).show()
@@ -44,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
             
         }
+
 
     }
 
